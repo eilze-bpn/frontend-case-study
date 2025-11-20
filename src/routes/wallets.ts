@@ -1,7 +1,7 @@
-import { Router } from "express";
+import express, { Request, Response } from "express";
 import { db } from "../db";
 
-const router = Router();
+const router = express.Router();
 
 /**
  * @openapi
@@ -26,7 +26,7 @@ const router = Router();
  *       404:
  *         description: Wallet not found
  */
-router.get("/:customerId", (req, res) => {
+router.get("/:customerId", (req: Request, res: Response) => {
   const wallet = db.wallets.find((w) => w.customerId === req.params.customerId);
   if (!wallet) {
     return res.status(404).json({ message: "Wallet not found" });
@@ -70,7 +70,7 @@ router.get("/:customerId", (req, res) => {
  *       404:
  *         description: Wallet not found
  */
-router.patch("/:customerId", (req, res) => {
+router.patch("/:customerId", (req: Request, res: Response) => {
   const wallet = db.wallets.find((w) => w.customerId === req.params.customerId);
   if (!wallet) {
     return res.status(404).json({ message: "Wallet not found" });

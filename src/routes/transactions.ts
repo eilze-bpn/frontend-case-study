@@ -1,7 +1,7 @@
-import { Router } from "express";
+import express, { Request, Response } from "express";
 import { db } from "../db";
 
-const router = Router();
+const router = express.Router();
 
 /**
  * @openapi
@@ -77,7 +77,7 @@ const router = Router();
  *                   items:
  *                     $ref: "#/components/schemas/Transaction"
  */
-router.get("/:customerId", (req, res) => {
+router.get("/:customerId", (req: Request, res: Response) => {
   const customerId = req.params.customerId;
 
   const page = parseInt((req.query.page as string) || "1", 10);

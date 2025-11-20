@@ -1,10 +1,10 @@
 import { faker } from "@faker-js/faker";
-import { Router } from "express";
+import express, { Request, Response } from "express";
 import { db } from "../db";
 import { Customer } from "../types";
 import { createCustomerAndRelationalData } from "../data/generators";
 
-const router = Router();
+const router = express.Router();
 
 function validateCustomerPayload(body: any) {
   const { name, email, phone, dateOfBirth, nationalId, address } = body;
@@ -98,7 +98,7 @@ function validateCustomerPayload(body: any) {
  *                   items:
  *                     $ref: "#/components/schemas/Customer"
  */
-router.get("/", (req, res) => {
+router.get("/", (req: Request, res: Response) => {
   const page = parseInt((req.query.page as string) || "1", 10);
   const pageSize = parseInt((req.query.pageSize as string) || "10", 10);
 
@@ -176,7 +176,7 @@ router.get("/", (req, res) => {
  *       404:
  *         description: Customer not found
  */
-router.get("/:id", (req, res) => {
+router.get("/:id", (req: Request, res: Response) => {
   const customer = db.customers.find((c) => c.id === req.params.id);
   if (!customer) {
     return res.status(404).json({ message: "Customer not found" });
@@ -239,7 +239,7 @@ router.get("/:id", (req, res) => {
  *       400:
  *         description: Validation error
  */
-router.post("/", (req, res) => {
+router.post("/", (req: Request, res: Response) => {
   const errors = validateCustomerPayload(req.body);
 
   if (errors.length > 0) {
@@ -302,7 +302,7 @@ router.post("/", (req, res) => {
  *       404:
  *         description: Customer not found
  */
-router.put("/:id", (req, res) => {
+router.put("/:id", (req: Request, res: Response) => {
   const existingIndex = db.customers.findIndex((c) => c.id === req.params.id);
 
   if (existingIndex === -1) {
@@ -359,7 +359,7 @@ router.put("/:id", (req, res) => {
  *       404:
  *         description: Customer not found
  */
-router.delete("/:id", (req, res) => {
+router.delete("/:id", (req: Request, res: Response) => {
   const { id } = req.params;
 
   const customerIndex = db.customers.findIndex((c) => c.id === id);
