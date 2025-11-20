@@ -24,7 +24,7 @@ app.use(express.json());
 
 // Swagger
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Healthcheck
 app.get("/health", (_req: Request, res: Response) => {
